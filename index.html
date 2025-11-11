@@ -7,13 +7,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* FULL SCREEN FIX: Ensure the entire viewport is used */
-        html, body {
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden; /* Prevent scrolling, as the content should fit */
-        }
-        
+        /* CSS is clean - removed full-screen height/width overrides */
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap');
 
         * {
@@ -26,26 +20,12 @@
             font-family: 'Exo 2', sans-serif;
             background: #0a0a1a;
             color: #e0e0ff;
+            overflow-x: hidden;
             background-image: 
                 radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(0, 191, 255, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 50% 50%, rgba(74, 0, 224, 0.05) 0%, transparent 50%);
         }
-        
-        /* The main layout container needs to fill the viewport height too */
-        .full-viewport-container {
-            min-height: 100vh;
-            max-height: 100vh;
-            overflow: hidden; /* Keep the main container fixed */
-        }
-
-        .main-content-scroll {
-             /* Allow the main content area to scroll if it overflows its fixed height */
-            height: calc(100vh - 8px); /* Account for padding/margin if any */
-            overflow-y: auto;
-            padding-bottom: 20px;
-        }
-
 
         .logo-text {
             font-family: 'Orbitron', sans-serif;
@@ -197,37 +177,10 @@
             transition: all 0.3s ease;
         }
         
-        /* Fullscreen Prompt Styling */
-        #fullscreen-prompt {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(10, 10, 26, 0.95);
-            z-index: 9999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            text-align: center;
-        }
-        
-        #fullscreen-prompt button {
-            margin-top: 20px;
-        }
     </style>
 </head>
-<body>
+<body class="min-h-screen">
     
-    <div id="fullscreen-prompt">
-        <h2 class="text-3xl font-bold logo-text mb-4">Welcome to Shooting Star Dashboard</h2>
-        <p class="text-indigo-300 mb-6">For the best experience, please activate full-screen mode.</p>
-        <button id="fullscreen-button" class="liquid-button text-lg px-6 py-3">
-            <i class="fas fa-expand mr-2"></i> Go Fullscreen
-        </button>
-    </div>
-
     <div class="fixed inset-0 z-0 overflow-hidden">
         <video autoplay muted loop class="w-full h-full object-cover opacity-20">
             <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-space-background-with-moving-stars-3011-large.mp4" type="video/mp4">
@@ -237,7 +190,7 @@
 
     <div id="shooting-stars"></div>
 
-    <div id="main-content" class="relative z-10 flex full-viewport-container p-4 hidden">
+    <div id="main-content" class="relative z-10 flex min-h-screen p-4">
         <div class="w-64 sidebar-glass mr-4 hidden md:flex flex-col justify-between float">
             <div>
                 <div class="p-6 border-b border-indigo-900/30">
@@ -320,7 +273,7 @@
             </div>
         </div>
 
-        <div class="flex-1 main-content-scroll">
+        <div class="flex-1 overflow-auto">
             
             <div class="md:hidden w-full ios-glass mb-4 p-4 flex items-center justify-between">
                 <div class="flex items-center space-x-3">
@@ -523,7 +476,30 @@
                                 <div class="mindmap-node absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-purple-600 rounded-full flex items-center justify-center shadow-lg shadow-purple-500/30">
                                     <i class="fas fa-meteor text-white"></i>
                                 </div>
+
+                                <div class="mindmap-node absolute top-1/4 left-1/4 w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center shadow-lg shadow-blue-500/30">
+                                    <i class="fas fa-brain text-white text-sm"></i>
                                 </div>
+
+                                <div class="mindmap-node absolute top-1/4 right-1/4 w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg shadow-green-500/30">
+                                    <i class="fas fa-lightbulb text-white text-sm"></i>
+                                </div>
+
+                                <div class="mindmap-node absolute bottom-1/4 left-1/4 w-12 h-12 bg-yellow-500 rounded-full flex items-center justify-center shadow-lg shadow-yellow-500/30">
+                                    <i class="fas fa-chart-line text-white text-sm"></i>
+                                </div>
+
+                                <div class="mindmap-node absolute bottom-1/4 right-1/4 w-12 h-12 bg-red-500 rounded-full flex items-center justify-center shadow-lg shadow-red-500/30">
+                                    <i class="fas fa-shield-alt text-white text-sm"></i>
+                                </div>
+
+                                <svg class="absolute inset-0 w-full h-full" style="pointer-events: none;">
+                                    <line x1="50%" y1="50%" x2="25%" y2="25%" stroke="rgba(100, 100, 255, 0.5)" stroke-width="2" />
+                                    <line x1="50%" y1="50%" x2="75%" y2="25%" stroke="rgba(100, 100, 255, 0.5)" stroke-width="2" />
+                                    <line x1="50%" y1="50%" x2="25%" y2="75%" stroke="rgba(100, 100, 255, 0.5)" stroke-width="2" />
+                                    <line x1="50%" y1="50%" x2="75%" y2="75%" stroke="rgba(100, 100, 255, 0.5)" stroke-width="2" />
+                                </svg>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -561,6 +537,32 @@
                                 </div>
                                 <span class="text-xs bg-yellow-900/50 text-yellow-400 px-2 py-1 rounded">Medium</span>
                             </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="flex-1 bg-green-900/50 hover:bg-green-800/50 text-green-400 py-1 rounded text-xs transition-colors liquid-button">
+                                    Approve
+                                </button>
+                                <button class="flex-1 bg-red-900/50 hover:bg-red-800/50 text-red-400 py-1 rounded text-xs transition-colors liquid-button">
+                                    Reject
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="p-3 rounded-lg decision-pending bg-gray-800/50">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <p class="font-medium">Budget allocation increase</p>
+                                    <p class="text-xs text-gray-400 mt-1">Increase Q4 marketing budget by 15%</p>
+                                </div>
+                                <span class="text-xs bg-red-900/50 text-red-400 px-2 py-1 rounded">Critical</span>
+                            </div>
+                            <div class="mt-3 flex space-x-2">
+                                <button class="flex-1 bg-green-900/50 hover:bg-green-800/50 text-green-400 py-1 rounded text-xs transition-colors liquid-button">
+                                    Approve
+                                </button>
+                                <button class="flex-1 bg-red-900/50 hover:bg-red-800/50 text-red-400 py-1 rounded text-xs transition-colors liquid-button">
+                                    Reject
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -569,42 +571,6 @@
     </div>
 
     <script>
-        // --- FULLSCREEN LOGIC ---
-        const fullscreenButton = document.getElementById('fullscreen-button');
-        const fullscreenPrompt = document.getElementById('fullscreen-prompt');
-        const mainContent = document.getElementById('main-content');
-        
-        function requestFullscreen() {
-            const element = document.documentElement; // Request fullscreen for the entire HTML document
-            if (element.requestFullscreen) {
-                element.requestFullscreen();
-            } else if (element.mozRequestFullScreen) { // Firefox
-                element.mozRequestFullScreen();
-            } else if (element.webkitRequestFullscreen) { // Chrome, Safari and Opera
-                element.webkitRequestFullscreen();
-            } else if (element.msRequestFullscreen) { // IE/Edge
-                element.msRequestFullscreen();
-            }
-        }
-
-        // Hide the prompt and show the dashboard when the button is clicked
-        fullscreenButton.addEventListener('click', () => {
-            requestFullscreen();
-            fullscreenPrompt.classList.add('hidden');
-            mainContent.classList.remove('hidden');
-        });
-        
-        // Handle full-screen exit (e.g., if the user presses ESC)
-        document.addEventListener('fullscreenchange', () => {
-            if (!document.fullscreenElement) {
-                // If full-screen is exited, show the prompt again
-                fullscreenPrompt.classList.remove('hidden');
-                mainContent.classList.add('hidden');
-            }
-        });
-        
-        // --- ORIGINAL DASHBOARD LOGIC (Cleaned) ---
-        
         // Create background stars
         function createStars() {
             const starsContainer = document.body;
@@ -614,9 +580,14 @@
                 const star = document.createElement('div');
                 star.classList.add('star');
 
+                // Random position
                 const x = Math.random() * 100;
                 const y = Math.random() * 100;
+
+                // Random size
                 const size = Math.random() * 3;
+
+                // Random animation duration
                 const duration = 3 + Math.random() * 10;
 
                 star.style.left = `${x}vw`;
@@ -636,17 +607,20 @@
                 const shootingStar = document.createElement('div');
                 shootingStar.classList.add('shooting-star');
 
+                // Random starting position
                 const startX = -100;
                 const startY = Math.random() * 100;
 
                 shootingStar.style.left = `${startX}px`;
                 shootingStar.style.top = `${startY}vh`;
 
+                // Random animation duration
                 const duration = 1 + Math.random() * 2;
                 shootingStar.style.animationDuration = `${duration}s`;
 
                 container.appendChild(shootingStar);
 
+                // Remove element after animation completes
                 setTimeout(() => {
                     shootingStar.remove();
                 }, duration * 1000);
@@ -657,21 +631,86 @@
         const mobileMenuButton = document.getElementById('mobile-menu');
         if (mobileMenuButton) {
              mobileMenuButton.addEventListener('click', function() {
-                // Since the sidebar is hidden by default and only shown on MD screens, 
-                // for mobile, we need a separate element/logic to show the menu.
-                // Assuming you want to toggle the fixed sidebar element for mobile
                 const sidebar = document.querySelector('.sidebar-glass');
                 sidebar.classList.toggle('hidden');
             });
         }
-       
 
-        // Initialize stars/shooting stars after DOM is loaded
+        // Theme toggle
+        document.querySelector('.theme-toggle').addEventListener('click', function() {
+            document.body.classList.toggle('light-mode');
+            const icon = this.querySelector('i');
+            if (document.body.classList.contains('light-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                document.body.style.background = '#f0f2f5';
+                document.body.style.color = '#333';
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                document.body.style.background = '#0a0a1a';
+                document.body.style.color = '#e0e0ff';
+            }
+        });
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('.liquid-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+
+                ripple.style.width = ripple.style.height = `${size}px`;
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+                ripple.classList.add('ripple-effect');
+
+                this.appendChild(ripple);
+
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+
+
+        // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             createShootingStars();
+            
+            // Add hover effects to cards
+            const cards = document.querySelectorAll('.stat-card, .ios-glass');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Add click effects to buttons
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+
+                button.addEventListener('mouseup', function() {
+                    this.style.transform = 'scale(1)';
+                });
+
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
         });
-        
     </script>
 </body>
 </html>
